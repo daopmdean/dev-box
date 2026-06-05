@@ -16,8 +16,8 @@ export default function JsonBeautify() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <span className="text-sm text-white/70">Indent</span>
-        <div className="inline-flex rounded-md bg-white/5 p-1">
+        <span className="text-sm text-gray-700 dark:text-white/70">Indent</span>
+        <div className="inline-flex rounded-md bg-black/5 dark:bg-white/5 p-1">
           {([2, 4, "tab"] as IndentOption[]).map((opt) => (
             <button
               key={String(opt)}
@@ -28,7 +28,7 @@ export default function JsonBeautify() {
               className={`rounded px-3 py-1 text-sm transition-colors ${
                 !minified && indent === opt
                   ? "bg-sky-500 text-white"
-                  : "text-white/60"
+                  : "text-gray-500 dark:text-white/60"
               }`}
             >
               {opt === "tab" ? "Tab" : `${opt} spaces`}
@@ -58,7 +58,7 @@ export default function JsonBeautify() {
           />
         ) : (
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-white/70">Formatted</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-white/70">Formatted</span>
             <div className="min-h-[24rem] rounded-md border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-300">
               {result.error}
             </div>

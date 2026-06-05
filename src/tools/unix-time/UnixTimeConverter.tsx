@@ -12,10 +12,10 @@ import {
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-white/5 py-2">
-      <span className="text-sm text-white/50">{label}</span>
+    <div className="flex items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 py-2">
+      <span className="text-sm text-gray-500 dark:text-white/50">{label}</span>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-sm text-white/90">{value}</span>
+        <span className="font-mono text-sm text-gray-900 dark:text-white/90">{value}</span>
         <CopyButton value={value} />
       </div>
     </div>
@@ -49,15 +49,15 @@ export default function UnixTimeConverter() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between rounded-md border border-white/10 bg-black/30 px-4 py-3">
-        <span className="text-sm text-white/50">Current epoch (seconds)</span>
-        <span className="font-mono text-lg text-sky-300">
+      <div className="flex items-center justify-between rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/30 px-4 py-3">
+        <span className="text-sm text-gray-500 dark:text-white/50">Current epoch (seconds)</span>
+        <span className="font-mono text-lg text-sky-600 dark:text-sky-300">
           {Math.floor(now / 1000)}
         </span>
       </div>
 
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-white/90">
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">
           Epoch → Human
         </h3>
         <div className="flex items-end gap-3">
@@ -79,7 +79,7 @@ export default function UnixTimeConverter() {
           <p className="text-sm text-red-300">Not a valid epoch timestamp.</p>
         )}
         {parsed && (
-          <div className="rounded-md border border-white/10 bg-black/20 px-4">
+          <div className="rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
             <Row label="Local" value={parsed.local} />
             <Row label="UTC" value={parsed.utc} />
             <Row label="ISO 8601" value={parsed.iso} />
@@ -91,7 +91,7 @@ export default function UnixTimeConverter() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-white/90">
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">
           Human → Epoch
         </h3>
         <Field label="Date & time (local)">
@@ -104,7 +104,7 @@ export default function UnixTimeConverter() {
           />
         </Field>
         {fromDate && (
-          <div className="rounded-md border border-white/10 bg-black/20 px-4">
+          <div className="rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
             <Row
               label="Seconds"
               value={String(Math.floor(fromDate.getTime() / 1000))}

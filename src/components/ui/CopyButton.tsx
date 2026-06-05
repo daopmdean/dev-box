@@ -24,7 +24,7 @@ export default function CopyButton({ value, className = "" }: Props) {
       type="button"
       onClick={copy}
       disabled={!value}
-      className={`rounded-md px-2.5 py-1 text-xs font-medium bg-white/10 hover:bg-white/15 text-white/80 transition-colors disabled:opacity-40 ${className}`}
+      className={`rounded-md px-2.5 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors disabled:opacity-40 dark:bg-white/10 dark:hover:bg-white/15 dark:text-white/80 ${className}`}
     >
       {copied ? "Copied!" : "Copy"}
     </button>

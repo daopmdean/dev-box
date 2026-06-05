@@ -25,20 +25,20 @@ export default function Base64Tool() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
-        <div className="inline-flex rounded-md bg-white/5 p-1">
+        <div className="inline-flex rounded-md bg-black/5 dark:bg-white/5 p-1">
           {(["encode", "decode"] as Mode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
               className={`rounded px-3 py-1 text-sm capitalize transition-colors ${
-                mode === m ? "bg-sky-500 text-white" : "text-white/60"
+                mode === m ? "bg-sky-500 text-white" : "text-gray-500 dark:text-white/60"
               }`}
             >
               {m}
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 text-sm text-white/70">
+        <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-white/70">
           <input
             type="checkbox"
             checked={urlSafe}

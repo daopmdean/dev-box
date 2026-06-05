@@ -10,9 +10,9 @@ interface Props {
 export default function Field({ label, children, hint }: Props) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-white/70">{label}</label>
+      <label className="text-sm font-medium text-gray-700 dark:text-white/70">{label}</label>
       {children}
-      {hint && <p className="text-xs text-white/40">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 dark:text-white/40">{hint}</p>}
     </div>
   );
 }

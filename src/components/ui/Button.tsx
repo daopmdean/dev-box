@@ -8,7 +8,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const styles: Record<Variant, string> = {
   primary: "bg-sky-500 hover:bg-sky-400 text-white",
-  secondary: "bg-white/10 hover:bg-white/15 text-white/90",
+  secondary: "bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-white/10 dark:hover:bg-white/15 dark:text-white/90",
 };
 
 export default function Button({

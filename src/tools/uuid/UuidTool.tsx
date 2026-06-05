@@ -19,7 +19,7 @@ export default function UuidTool() {
   return (
     <div className="flex flex-col gap-8">
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-white/90">UUID v4</h3>
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">UUID v4</h3>
         <div className="flex items-end gap-3">
           <Field label="Count">
             <Input
@@ -47,7 +47,7 @@ export default function UuidTool() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-white/90">Random string</h3>
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">Random string</h3>
         <div className="flex flex-wrap items-end gap-3">
           <Field label="Length">
             <Input
@@ -63,10 +63,10 @@ export default function UuidTool() {
             <select
               value={charset}
               onChange={(e) => setCharset(e.target.value as Charset)}
-              className="rounded-md border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white/90 outline-none focus:border-sky-500/60"
+              className="rounded-md border border-black/10 bg-white text-gray-900 px-3 py-1.5 text-sm outline-none focus:border-sky-500/60 dark:border-white/10 dark:bg-black/30 dark:text-white/90"
             >
               {CHARSETS.map((c) => (
-                <option key={c} value={c} className="bg-[#0b0d11]">
+                <option key={c} value={c} className="dark:bg-[#0b0d11]">
                   {c}
                 </option>
               ))}

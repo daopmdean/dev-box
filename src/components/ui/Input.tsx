@@ -7,7 +7,7 @@ export default function Input({
   return (
     <input
       spellCheck={false}
-      className={`rounded-md border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white/90 outline-none focus:border-sky-500/60 ${className}`}
+      className={`rounded-md border border-black/10 bg-white text-gray-900 px-3 py-1.5 text-sm outline-none focus:border-sky-500/60 dark:border-white/10 dark:bg-black/30 dark:text-white/90 ${className}`}
       {...props}
     />
   );

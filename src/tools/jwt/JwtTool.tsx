@@ -89,14 +89,14 @@ function DecodeMode() {
           </div>
 
           {timeFields(result.decoded.payload).length > 0 && (
-            <div className="rounded-md border border-white/10 bg-black/20 px-4 py-2">
+            <div className="rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4 py-2">
               {timeFields(result.decoded.payload).map((f) => (
                 <div
                   key={f.label}
-                  className="flex justify-between border-b border-white/5 py-1.5 text-sm last:border-0"
+                  className="flex justify-between border-b border-black/5 dark:border-white/5 py-1.5 text-sm last:border-0"
                 >
-                  <span className="text-white/50">{f.label}</span>
-                  <span className="font-mono text-white/90">{f.value}</span>
+                  <span className="text-gray-500 dark:text-white/50">{f.label}</span>
+                  <span className="font-mono text-gray-900 dark:text-white/90">{f.value}</span>
                 </div>
               ))}
               {expired !== null && (
@@ -194,13 +194,13 @@ export default function JwtTool() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="inline-flex w-fit rounded-md bg-white/5 p-1">
+      <div className="inline-flex w-fit rounded-md bg-black/5 dark:bg-white/5 p-1">
         {(["decode", "encode"] as Mode[]).map((m) => (
           <button
             key={m}
             onClick={() => setMode(m)}
             className={`rounded px-3 py-1 text-sm capitalize transition-colors ${
-              mode === m ? "bg-sky-500 text-white" : "text-white/60"
+              mode === m ? "bg-sky-500 text-white" : "text-gray-500 dark:text-white/60"
             }`}
           >
             {m}

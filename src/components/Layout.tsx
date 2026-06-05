@@ -10,10 +10,10 @@ export default function Layout() {
     <div className="flex h-screen">
       <Sidebar />
       <main className="flex-1 overflow-y-auto">
-        <header className="px-8 py-5 border-b border-white/10">
+        <header className="px-8 py-5 border-b border-black/10 dark:border-white/10">
           <h2 className="text-xl font-semibold">{active?.name ?? "dev-box"}</h2>
           {active && (
-            <p className="text-sm text-white/40">{active.description}</p>
+            <p className="text-sm text-black/40 dark:text-white/40">{active.description}</p>
           )}
         </header>
         <div className="p-8 max-w-5xl">
