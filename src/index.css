@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* Dark theme by default. The app targets a devutils-like dark look. */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0f1115;
+  color: #e6e8eb;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+textarea,
+input,
+pre,
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
