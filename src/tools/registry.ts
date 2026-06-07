@@ -3,6 +3,7 @@ import UnixTimeConverter from "./unix-time/UnixTimeConverter";
 import JwtTool from "./jwt/JwtTool";
 import Base64Tool from "./base64/Base64Tool";
 import UuidTool from "./uuid/UuidTool";
+import RandomStringTool from "./random-string/RandomStringTool";
 import JsonBeautify from "./json/JsonBeautify";
 
 /**
@@ -37,10 +38,17 @@ export const tools: Tool[] = [
   },
   {
     id: "uuid",
-    name: "UUID / Random",
-    description: "Generate UUIDs and random strings",
+    name: "UUID v4",
+    description: "Generate RFC-4122 v4 UUIDs",
     path: "/uuid",
     component: UuidTool,
+  },
+  {
+    id: "random-string",
+    name: "Random String",
+    description: "Generate random strings with custom charset and length",
+    path: "/random-string",
+    component: RandomStringTool,
   },
   {
     id: "json",
