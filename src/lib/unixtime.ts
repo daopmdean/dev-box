@@ -52,6 +52,26 @@ export function describe(date: Date, now: Date = new Date()): TimeParts {
   };
 }
 
+export interface DurationParts {
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export function secondsToDuration(totalSeconds: number): DurationParts {
+  const abs = Math.floor(Math.abs(totalSeconds));
+  const years = Math.floor(abs / 31536000);
+  const months = Math.floor((abs % 31536000) / 2592000);
+  const days = Math.floor((abs % 2592000) / 86400);
+  const hours = Math.floor((abs % 86400) / 3600);
+  const minutes = Math.floor((abs % 3600) / 60);
+  const seconds = abs % 60;
+  return { years, months, days, hours, minutes, seconds };
+}
+
 /** Format a Date for a `datetime-local` input (in local time). */
 export function toDatetimeLocal(date: Date): string {
   const pad = (n: number) => String(n).padStart(2, "0");

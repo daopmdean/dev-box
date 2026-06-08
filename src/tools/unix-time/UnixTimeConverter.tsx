@@ -4,7 +4,9 @@ import CopyButton from "../../components/ui/CopyButton";
 import {
   describe,
   parseEpoch,
+  secondsToDuration,
   toDatetimeLocal,
+  type DurationParts,
   type TimeParts,
 } from "../../lib/unixtime";
 
@@ -47,10 +49,19 @@ export default function UnixTimeConverter() {
     return date ? describe(date) : null;
   }, [epochInput]);
 
+  const [durationInput, setDurationInput] = useState("");
+
   const fromDate = useMemo(() => {
     const d = new Date(dateInput);
     return Number.isNaN(d.getTime()) ? null : d;
   }, [dateInput]);
+
+  const duration: DurationParts | null = useMemo(() => {
+    const trimmed = durationInput.trim();
+    if (!trimmed) return null;
+    const num = Number(trimmed);
+    return Number.isFinite(num) ? secondsToDuration(num) : null;
+  }, [durationInput]);
 
   return (
     <div className="flex flex-col gap-6 max-w-lg">
@@ -117,6 +128,33 @@ export default function UnixTimeConverter() {
             <Row label="Seconds" value={String(Math.floor(fromDate.getTime() / 1000))} />
             <Row label="Milliseconds" value={String(fromDate.getTime())} />
             <Row label="ISO 8601" value={fromDate.toISOString()} />
+          </div>
+        )}
+      </section>
+
+      {/* Seconds → Duration */}
+      <section className="flex flex-col gap-3">
+        <SectionLabel>Seconds → Duration</SectionLabel>
+        <div className="flex overflow-hidden rounded-lg border border-black/10 dark:border-white/10 focus-within:border-sky-500/50 transition-colors">
+          <input
+            spellCheck={false}
+            value={durationInput}
+            onChange={(e) => setDurationInput(e.target.value)}
+            placeholder="86400"
+            className="flex-1 min-w-0 bg-white dark:bg-black/30 px-3 py-2 text-sm font-mono text-gray-900 dark:text-white/90 outline-none placeholder:text-gray-400 dark:placeholder:text-white/20"
+          />
+        </div>
+        {durationInput && !duration && (
+          <p className="text-sm text-red-400 dark:text-red-300">Not a valid number.</p>
+        )}
+        {duration && (
+          <div className="rounded-xl border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
+            <Row label="Years" value={String(duration.years)} />
+            <Row label="Months" value={String(duration.months)} />
+            <Row label="Days" value={String(duration.days)} />
+            <Row label="Hours" value={String(duration.hours)} />
+            <Row label="Minutes" value={String(duration.minutes)} />
+            <Row label="Seconds" value={String(duration.seconds)} />
           </div>
         )}
       </section>
