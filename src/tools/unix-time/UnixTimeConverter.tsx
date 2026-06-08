@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
-import Field from "../../components/ui/Field";
 import CopyButton from "../../components/ui/CopyButton";
 import {
   describe,
@@ -12,13 +10,21 @@ import {
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 py-2">
-      <span className="text-sm text-gray-500 dark:text-white/50">{label}</span>
+    <div className="flex items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 py-2.5 last:border-0">
+      <span className="text-sm text-gray-500 dark:text-white/40">{label}</span>
       <div className="flex items-center gap-2">
         <span className="font-mono text-sm text-gray-900 dark:text-white/90">{value}</span>
         <CopyButton value={value} />
       </div>
     </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-white/30">
+      {children}
+    </h3>
   );
 }
 
@@ -31,7 +37,6 @@ export default function UnixTimeConverter() {
     toDatetimeLocal(new Date()),
   );
 
-  // Live clock for the current epoch.
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
@@ -48,38 +53,45 @@ export default function UnixTimeConverter() {
   }, [dateInput]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/30 px-4 py-3">
-        <span className="text-sm text-gray-500 dark:text-white/50">Current epoch (seconds)</span>
-        <span className="font-mono text-lg text-sky-600 dark:text-sky-300">
-          {Math.floor(now / 1000)}
-        </span>
+    <div className="flex flex-col gap-6 max-w-lg">
+      {/* Live clock */}
+      <div className="flex items-center justify-between rounded-xl border border-black/10 bg-white dark:border-white/10 dark:bg-black/30 px-5 py-4">
+        <span className="text-sm text-gray-500 dark:text-white/40">Current epoch</span>
+        <div className="flex items-baseline gap-1.5">
+          <span className="font-mono text-2xl font-semibold tabular-nums text-sky-600 dark:text-sky-400">
+            {Math.floor(now / 1000)}
+          </span>
+          <span className="text-xs text-gray-400 dark:text-white/30">s</span>
+        </div>
       </div>
 
+      {/* Epoch → Human */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">
-          Epoch → Human
-        </h3>
-        <div className="flex items-end gap-3">
-          <Field label="Epoch (seconds or milliseconds)" hint="Auto-detects s vs ms">
-            <Input
-              value={epochInput}
-              onChange={(e) => setEpochInput(e.target.value)}
-              className="w-72 font-mono"
-              placeholder="1700000000"
-            />
-          </Field>
-          <Button
+        <SectionLabel>Epoch → Human</SectionLabel>
+
+        {/* Input group: epoch input + Now button share one border */}
+        <div className="flex overflow-hidden rounded-lg border border-black/10 dark:border-white/10 focus-within:border-sky-500/50 transition-colors">
+          <input
+            spellCheck={false}
+            value={epochInput}
+            onChange={(e) => setEpochInput(e.target.value)}
+            placeholder="1700000000"
+            className="flex-1 min-w-0 bg-white dark:bg-black/30 px-3 py-2 text-sm font-mono text-gray-900 dark:text-white/90 outline-none placeholder:text-gray-400 dark:placeholder:text-white/20"
+          />
+          <button
             onClick={() => setEpochInput(String(Math.floor(Date.now() / 1000)))}
+            className="shrink-0 border-l border-black/10 dark:border-white/10 bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 px-3 text-sm font-medium text-gray-600 dark:text-white/50 transition-colors"
           >
             Now
-          </Button>
+          </button>
         </div>
+        <p className="text-xs text-gray-400 dark:text-white/30">Auto-detects seconds vs milliseconds</p>
+
         {epochInput && !parsed && (
-          <p className="text-sm text-red-300">Not a valid epoch timestamp.</p>
+          <p className="text-sm text-red-400 dark:text-red-300">Not a valid epoch timestamp.</p>
         )}
         {parsed && (
-          <div className="rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
+          <div className="rounded-xl border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
             <Row label="Local" value={parsed.local} />
             <Row label="UTC" value={parsed.utc} />
             <Row label="ISO 8601" value={parsed.iso} />
@@ -90,25 +102,19 @@ export default function UnixTimeConverter() {
         )}
       </section>
 
+      {/* Human → Epoch */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-base font-semibold text-gray-900 dark:text-white/90">
-          Human → Epoch
-        </h3>
-        <Field label="Date & time (local)">
-          <Input
-            type="datetime-local"
-            step={1}
-            value={dateInput}
-            onChange={(e) => setDateInput(e.target.value)}
-            className="w-72"
-          />
-        </Field>
+        <SectionLabel>Human → Epoch</SectionLabel>
+        <Input
+          type="datetime-local"
+          step={1}
+          value={dateInput}
+          onChange={(e) => setDateInput(e.target.value)}
+          className="w-72"
+        />
         {fromDate && (
-          <div className="rounded-md border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
-            <Row
-              label="Seconds"
-              value={String(Math.floor(fromDate.getTime() / 1000))}
-            />
+          <div className="rounded-xl border border-black/10 bg-white dark:border-white/10 dark:bg-black/20 px-4">
+            <Row label="Seconds" value={String(Math.floor(fromDate.getTime() / 1000))} />
             <Row label="Milliseconds" value={String(fromDate.getTime())} />
             <Row label="ISO 8601" value={fromDate.toISOString()} />
           </div>
