@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/dev-box/",
   plugins: [react(), tailwindcss()],
   test: {
     // Pure lib helpers need no DOM; node avoids jose/jsdom realm issues.
