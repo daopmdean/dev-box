@@ -6,6 +6,8 @@ import UuidTool from "./uuid/UuidTool";
 import RandomStringTool from "./random-string/RandomStringTool";
 import JsonBeautify from "./json/JsonBeautify";
 import HashGenerator from "./hash-generator/HashGenerator";
+import DiffTool from "./diff/DiffTool";
+
 
 /**
  * The single source of truth for all tools.
@@ -64,5 +66,12 @@ export const tools: Tool[] = [
     description: "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes",
     path: "/hash-generator",
     component: HashGenerator,
+  },
+  {
+    id: "diff",
+    name: "Text Diff",
+    description: "Compare two texts and highlight differences",
+    path: "/diff",
+    component: DiffTool,
   },
 ];

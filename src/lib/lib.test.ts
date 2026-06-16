@@ -5,6 +5,8 @@ import { parseEpoch } from "./unixtime";
 import { decodeJwt, signHs256, verifyHs256 } from "./jwt";
 import { randomString, uuidV4 } from "./random";
 import { md5, generateHashes } from "./hash";
+import { diffLines, diffWords, diffChars } from "./diff";
+
 
 describe("base64", () => {
   it("round-trips ASCII", () => {
@@ -123,3 +125,84 @@ describe("hash", () => {
     expect(results.sha512).toBe("07e547d9586f6a73f73fbac0435ed76951218fb7d0c8d788a309d785436bbb642e93a252a954f23912547d1e8a3b5ed6e1bfd7097821233fa0538f3db854fee6");
   });
 });
+
+describe("diff", () => {
+  it("diffs lines correctly", () => {
+    const textA = "line 1\nline 2\nline 3";
+    const textB = "line 1\nline 2.5\nline 3\nline 4";
+    const result = diffLines(textA, textB);
+    expect(result).toEqual([
+      { type: "common", value: "line 1" },
+      { type: "removed", value: "line 2" },
+      { type: "added", value: "line 2.5" },
+      { type: "common", value: "line 3" },
+      { type: "added", value: "line 4" },
+    ]);
+  });
+
+  it("handles case insensitivity and whitespace options", () => {
+    const textA = "LINE 1\n  line 2";
+    const textB = "line 1\nline 2";
+    
+    // Default (strict)
+    expect(diffLines(textA, textB)).toEqual([
+      { type: "removed", value: "LINE 1" },
+      { type: "removed", value: "  line 2" },
+      { type: "added", value: "line 1" },
+      { type: "added", value: "line 2" },
+    ]);
+
+    // Case insensitive
+    expect(diffLines(textA, textB, { caseInsensitive: true })).toEqual([
+      { type: "common", value: "line 1" },
+      { type: "removed", value: "  line 2" },
+      { type: "added", value: "line 2" },
+    ]);
+
+    // Ignore whitespace
+    expect(diffLines(textA, textB, { ignoreWhitespace: true })).toEqual([
+      { type: "removed", value: "LINE 1" },
+      { type: "added", value: "line 1" },
+      { type: "common", value: "line 2" },
+    ]);
+
+    // Both
+    expect(diffLines(textA, textB, { caseInsensitive: true, ignoreWhitespace: true })).toEqual([
+      { type: "common", value: "line 1" },
+      { type: "common", value: "line 2" },
+    ]);
+  });
+
+  it("diffs words correctly", () => {
+    const textA = "hello world";
+    const textB = "hello sweet world!";
+    const result = diffWords(textA, textB);
+    expect(result).toEqual([
+      { type: "common", value: "hello" },
+      { type: "added", value: " " },
+      { type: "added", value: "sweet" },
+      { type: "common", value: " " },
+      { type: "common", value: "world" },
+      { type: "added", value: "!" },
+    ]);
+  });
+
+  it("diffs characters correctly", () => {
+    const textA = "abc";
+    const textB = "axc";
+    const result = diffChars(textA, textB);
+    expect(result).toEqual([
+      { type: "common", value: "a" },
+      { type: "removed", value: "b" },
+      { type: "added", value: "x" },
+      { type: "common", value: "c" },
+    ]);
+  });
+
+  it("handles empty values and edge cases", () => {
+    expect(diffLines("", "")).toEqual([]);
+    expect(diffLines("a", "")).toEqual([{ type: "removed", value: "a" }]);
+    expect(diffLines("", "b")).toEqual([{ type: "added", value: "b" }]);
+  });
+});
+
