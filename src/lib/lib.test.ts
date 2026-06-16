@@ -4,6 +4,7 @@ import { beautifyJson, minifyJson } from "./json";
 import { parseEpoch } from "./unixtime";
 import { decodeJwt, signHs256, verifyHs256 } from "./jwt";
 import { randomString, uuidV4 } from "./random";
+import { md5, generateHashes } from "./hash";
 
 describe("base64", () => {
   it("round-trips ASCII", () => {
@@ -90,5 +91,35 @@ describe("random", () => {
     const s = randomString(32, "hex");
     expect(s).toHaveLength(32);
     expect(s).toMatch(/^[0-9a-f]+$/);
+  });
+});
+
+describe("hash", () => {
+  it("calculates MD5 correctly (known vectors)", () => {
+    // Empty string
+    expect(md5(new Uint8Array())).toBe("d41d8cd98f00b204e9800998ecf8427e");
+    
+    // Simple string
+    const encoder = new TextEncoder();
+    expect(md5(encoder.encode("The quick brown fox jumps over the lazy dog")))
+      .toBe("9e107d9d372bb6826bd81d3542a419d6");
+
+    // UTF-8 string
+    expect(md5(encoder.encode("héllo 🌍 café")))
+      .toBe("373bfc8556e8ac1266bb8d8b8f8a1710");
+  });
+
+  it("calculates all hashes (MD5 + SHA family) in parallel", async () => {
+    const results = await generateHashes("The quick brown fox jumps over the lazy dog");
+    
+    expect(results.md5).toBe("9e107d9d372bb6826bd81d3542a419d6");
+    // SHA-1
+    expect(results.sha1).toBe("2fd4e1c67a2d28fced849ee1bb76e7391b93eb12");
+    // SHA-256
+    expect(results.sha256).toBe("d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592");
+    // SHA-384
+    expect(results.sha384).toBe("ca737f1014a48f4c0b6dd43cb177b0afd9e5169367544c494011e3317dbf9a509cb1e5dc1e85a941bbee3d7f2afbc9b1");
+    // SHA-512
+    expect(results.sha512).toBe("07e547d9586f6a73f73fbac0435ed76951218fb7d0c8d788a309d785436bbb642e93a252a954f23912547d1e8a3b5ed6e1bfd7097821233fa0538f3db854fee6");
   });
 });

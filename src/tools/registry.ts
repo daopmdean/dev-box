@@ -5,6 +5,7 @@ import Base64Tool from "./base64/Base64Tool";
 import UuidTool from "./uuid/UuidTool";
 import RandomStringTool from "./random-string/RandomStringTool";
 import JsonBeautify from "./json/JsonBeautify";
+import HashGenerator from "./hash-generator/HashGenerator";
 
 /**
  * The single source of truth for all tools.
@@ -56,5 +57,12 @@ export const tools: Tool[] = [
     description: "Format, indent and minify JSON",
     path: "/json",
     component: JsonBeautify,
+  },
+  {
+    id: "hash-generator",
+    name: "Hash Generator",
+    description: "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes",
+    path: "/hash-generator",
+    component: HashGenerator,
   },
 ];
