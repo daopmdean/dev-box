@@ -3,6 +3,8 @@
 A lightweight, browser-based collection of developer utilities — inspired by
 [devutils.com](https://devutils.com/), but simpler and easy to extend.
 
+**Live View:** [daopmdean.github.io/dev-box](https://daopmdean.github.io/dev-box/)
+
 > **Pure vibe code.** Zero lines written by hand — this entire project was built through
 > conversational prompts with [Claude Code](https://claude.ai/code). No manual coding,
 > no copy-pasting snippets — just vibes and AI.
