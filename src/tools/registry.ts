@@ -7,6 +7,7 @@ import RandomStringTool from "./random-string/RandomStringTool";
 import JsonBeautify from "./json/JsonBeautify";
 import HashGenerator from "./hash-generator/HashGenerator";
 import DiffTool from "./diff/DiffTool";
+import UrlEncoderTool from "./url-encoder/UrlEncoderTool";
 
 
 /**
@@ -73,5 +74,12 @@ export const tools: Tool[] = [
     description: "Compare two texts and highlight differences",
     path: "/diff",
     component: DiffTool,
+  },
+  {
+    id: "url-encoder",
+    name: "URL Encode/Decode",
+    description: "Encode and decode URL entities",
+    path: "/url-encoder",
+    component: UrlEncoderTool,
   },
 ];
