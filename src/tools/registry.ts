@@ -2,6 +2,7 @@ import type { Tool } from "./types";
 import UnixTimeConverter from "./unix-time/UnixTimeConverter";
 import JwtTool from "./jwt/JwtTool";
 import Base64Tool from "./base64/Base64Tool";
+import Base64ImageTool from "./base64-image/Base64ImageTool";
 import UuidTool from "./uuid/UuidTool";
 import RandomStringTool from "./random-string/RandomStringTool";
 import JsonBeautify from "./json/JsonBeautify";
@@ -39,6 +40,13 @@ export const tools: Tool[] = [
     description: "Encode and decode Base64 (UTF-8 safe)",
     path: "/base64",
     component: Base64Tool,
+  },
+  {
+    id: "base64-image",
+    name: "Base64 Image",
+    description: "Convert Base64 strings to Images and vice versa",
+    path: "/base64-image",
+    component: Base64ImageTool,
   },
   {
     id: "uuid",
