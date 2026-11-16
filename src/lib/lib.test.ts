@@ -6,6 +6,12 @@ import { decodeJwt, signHs256, verifyHs256 } from "./jwt";
 import { randomString, uuidV4 } from "./random";
 import { md5, generateHashes } from "./hash";
 import { diffLines, diffWords, diffChars } from "./diff";
+import {
+  convertTimeUnit,
+  convertToAllUnits,
+  formatCompoundDuration,
+  formatTimeValue,
+} from "./time-unit";
 
 
 describe("base64", () => {
@@ -205,4 +211,28 @@ describe("diff", () => {
     expect(diffLines("", "b")).toEqual([{ type: "added", value: "b" }]);
   });
 });
+
+describe("time-unit", () => {
+  it("converts between time units accurately", () => {
+    expect(convertTimeUnit(1, "h", "min")).toBe(60);
+    expect(convertTimeUnit(1, "d", "s")).toBe(86400);
+    expect(convertTimeUnit(1500, "ms", "s")).toBe(1.5);
+    expect(convertTimeUnit(1, "wk", "d")).toBe(7);
+  });
+
+  it("converts a value to all supported units", () => {
+    const all = convertToAllUnits(1, "min");
+    expect(all.s).toBe(60);
+    expect(all.ms).toBe(60000);
+    expect(all.h).toBeCloseTo(1 / 60);
+  });
+
+  it("formats compound durations cleanly", () => {
+    expect(formatCompoundDuration(0)).toBe("0s");
+    expect(formatCompoundDuration(3661)).toBe("1h 1m 1s");
+    expect(formatCompoundDuration(90061.5)).toBe("1d 1h 1m 1s 500ms");
+    expect(formatTimeValue(0.1 + 0.2)).toBe("0.3");
+  });
+});
+
 
