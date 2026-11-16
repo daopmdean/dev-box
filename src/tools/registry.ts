@@ -1,5 +1,6 @@
 import type { Tool } from "./types";
 import UnixTimeConverter from "./unix-time/UnixTimeConverter";
+import TimeUnitTool from "./time-unit/TimeUnitTool";
 import JwtTool from "./jwt/JwtTool";
 import Base64Tool from "./base64/Base64Tool";
 import Base64ImageTool from "./base64-image/Base64ImageTool";
@@ -26,6 +27,13 @@ export const tools: Tool[] = [
     description: "Convert between epoch timestamps and human dates",
     path: "/unix-time",
     component: UnixTimeConverter,
+  },
+  {
+    id: "time-unit",
+    name: "Time Unit Converter",
+    description: "Convert between ns, μs, ms, s, min, h, days, weeks, months, and years",
+    path: "/time-unit",
+    component: TimeUnitTool,
   },
   {
     id: "jwt",
